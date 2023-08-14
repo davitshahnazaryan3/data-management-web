@@ -4,21 +4,11 @@
 
 **Dataset metadata is generated through admin dashboard**
 
+*Note: a small portion of codebase is shared only*
+
 ![Architecture](./architecture/architecture.png)
 
 ![Taxonomy Explore](./media/taxonomySearch.gif)
-
-### Project Technology Stack
-This project was built using the following technologies
-
-- Frontend framework: Vue.js
-- Backend framework: django (Rest API)
-- Database: MongoDb
-- Styling: CSS, Bulma
-- Deployment: Docker, Nginx-proxy
-- API Testing: Rest APIClient, Postman
-
-*Note: a small portion of codebase is shared only*
 
 
 ### Objective
