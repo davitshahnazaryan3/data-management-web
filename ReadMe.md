@@ -2,6 +2,10 @@
 
 **[Explore datasets](https://www.betestdata.eu/explore) with ease using taxonomy filtering, allowing you to quickly identify the specific experimental datasets you need and download them effortlessly.**
 
+**Dataset metadata is generated through admin dashboard**
+
+![Architecture](./architecture/architecture.png)
+
 ![Taxonomy Explore](./media/taxonomySearch.gif)
 
 ### Project Technology Stack
