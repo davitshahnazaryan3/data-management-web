@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /contact/
+Disallow: /privacy-terms/
+Disallow: /cookies/
+Disallow: /404-error/
+Disallow: /403-error/
+Disallow: /500-error/
+
+Sitemap: https://www.betestdata.eu/sitemap.xml

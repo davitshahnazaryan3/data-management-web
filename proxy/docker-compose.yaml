@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  webserver:
+    image: nginx:latest
+    ports:
+      - 80:80
+      - 443:443
+    restart: always
+    volumes:
+      - ./share-nginx:/usr/share/nginx
+      - /var/log/nginx:/var/log/nginx
+      - ./nginx/conf.d/:/etc/nginx/conf.d/:ro
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./ssl/certs/:/etc/ssl/certs/:ro
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./ssl/certs/letsencrypt/:/etc/letsencrypt/:rw

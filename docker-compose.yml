@@ -1,0 +1,103 @@
+version: '3'
+
+services:
+
+  web:
+    image: frontend:1.0.0
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: frontend/dockerfile
+    depends_on:
+      - app
+    container_name: frontend
+    ports: 
+      - "8080:80"
+      
+    env_file:
+      - ./frontend/config/.env
+
+    networks:
+      - dm-net
+
+    volumes:
+      - static-content:/usr/share/nginx/html/static/
+      - media-content:/usr/share/nginx/html/media/
+
+    stdin_open: true
+    tty: true
+
+  app:
+    image: data-manage:1.0.0
+    build:
+      context: .
+      dockerfile: backend/dockerfile
+    depends_on:
+      - mongodb
+      - cache
+    command: bash -c "gunicorn --bind 0.0.0.0:8000 config.wsgi --workers=4"
+
+    container_name: backend
+    restart: unless-stopped
+    
+    ports: 
+      - "8000:8000"
+      
+    volumes:
+      - /mnt/qml-data-repo/storage:/data/storage:ro
+      # - ./backend/media:/usr/src/app/media
+      - media-content:/usr/src/app/media
+      - static-content:/static
+
+    env_file:
+      - ./backend/config/.env
+
+    environment:
+      - DEBUG=1
+      - REDIS_HOST=cache
+
+    networks:
+      - dm-net
+
+    stdin_open: true
+    tty: true
+  
+  mongodb:
+    image: mongo:6.0
+    restart: unless-stopped
+    container_name: database
+    env_file:
+      - ./backend/config/.env
+    volumes:
+      - /mnt/qml-data-repo/db:/data/db
+      # - mongo-db:/data/db
+      
+  cache:
+    image: "redis:6-alpine"
+    restart: unless-stopped
+    container_name: cache
+    ports:
+      - 6379:6379
+    volumes:
+      - cache-db:/data/cache
+    command: redis-server --appendonly yes
+    networks:
+      - dm-net
+
+
+volumes:
+  # mongo-db:
+  cache-db:
+  static-content:
+  media-content: 
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./backend/media
+
+
+networks:
+  dm-net:
+    name: dm-net
+    driver: bridge

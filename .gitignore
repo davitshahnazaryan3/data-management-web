@@ -1,0 +1,21 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# Distribution / packaging
+/venv/
+package-lock.json
+/dist
+/manager/
+/.idea/
+node_modules/
+htmlcov/
+.coverage
+logs/
+dump.rdb
+.pytest_cache
+
+# local env files
+.env.local
+.env.*.local
+.env
+.env_prod
